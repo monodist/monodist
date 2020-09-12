@@ -39,10 +39,10 @@ jobs:
           if pnpx changeset status 2>&1 | grep -i "no changesets present"; \
           then echo "::set-output name=changes::false"; \
           else echo "::set-output name=changes::true"; \
-          fi;
+          fi
 
   build-test-lint:
-    if: needs.job1.outputs.changes == true
+    if: needs.changeset-check.outputs.changes == 'true'
     needs: changeset-check
     runs-on: ubuntu-latest
     strategy:
