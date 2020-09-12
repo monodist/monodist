@@ -1,5 +1,13 @@
 # @monodist/lib-b
 
+## 0.1.3
+
+### Patch Changes
+
+- 0cf4612: rewrapping string
+- Updated dependencies [0cf4612]
+  - @monodist/lib-a@0.1.2
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @monodist/lib-a
 
+## 0.1.2
+
+### Patch Changes
+
+- 0cf4612: changed the wrap from "\*" to "\$"
+
 ## 0.1.1
 
 ### Patch Changes
