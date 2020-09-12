@@ -1,6 +1,6 @@
 {
   "name": "@monodist/lib-b",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A library named lib-b",
   "keywords": [],
   "license": "MIT",
@@ -10,9 +10,7 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "build": "pnpm run clean && pnpm run compile",
     "clean": "rimraf dist *.tsbuildinfo",

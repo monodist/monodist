@@ -1,5 +1,11 @@
 # @monodist/lib-b
 
+## 0.1.2
+
+### Patch Changes
+
+- b4ca6c6: Changed the wrapping string from \* to ~
+
 ## 0.1.1
 
 ### Patch Changes
