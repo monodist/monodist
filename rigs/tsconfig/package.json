@@ -2,7 +2,7 @@
   "name": "@monodist/tsconfig",
   "private": true,
   "description": "monodist's TypeScript configuration",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Devin Fee",
     "email": "devin@devinfee.com"
