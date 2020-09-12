@@ -29,7 +29,9 @@ jobs:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
-      - run: pnpm install --frozen-lockfile
+      - name: enable husky install
+        run: "echo $(cat .huskyrc | jq '. + { skipCI: false }') > .huskyrc"
+      - run: pnpm install
       # End boilerplate
 
       - name: write GitHub NPM registry authToken
@@ -72,7 +74,7 @@ jobs:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install
       # End boilerplate
 
       - run: pnpm prettier

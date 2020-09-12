@@ -10,7 +10,9 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "pnpm run clean && pnpm run compile",
     "clean": "rimraf dist *.tsbuildinfo",
