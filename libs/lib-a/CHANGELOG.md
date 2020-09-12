@@ -1,5 +1,11 @@
 # @monodist/lib-a
 
+## 0.1.3
+
+### Patch Changes
+
+- 6732240: bump
+
 ## 0.1.2
 
 ### Patch Changes
