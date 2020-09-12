@@ -38,5 +38,8 @@
   "devDependencies": {
     "@monodist/eslint-config": "workspace:*",
     "@monodist/tsconfig": "workspace:*"
+  },
+  "dependencies": {
+    "@monodist/lib-a": "workspace:^0.1.1"
   }
 }
