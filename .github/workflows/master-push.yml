@@ -9,14 +9,12 @@ env:
   PNPM_VERSION: 5.5.12
 
 jobs:
-  changeset-check:
+  changeset:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
 
-    outputs:
-      changes: ${{ steps.status.outputs.changes }}
     steps:
       # Begin boilerplate
       - uses: actions/checkout@v2
@@ -34,23 +32,18 @@ jobs:
       - run: pnpm install --frozen-lockfile
       # End boilerplate
 
-      - name: changeset status
-        id: status
-        run: |
-          if pnpx changeset status 2>&1 | grep -i "no changesets present"; \
-          then echo "::set-output name=changes::false"; \
-          else echo "::set-output name=changes::true"; \
-          fi
       - name: write GitHub NPM registry authToken
-        if: steps.status.outputs.changes == 'true'
         run: |
           cat << EOF > "$HOME/.npmrc"
           //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
           EOF
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # This will not trigger the `master-push` workflow to re-run as it uses
+      # the GITHUB_TOKEN. To trigger a new workflow, use a personal access
+      # token as described here:
+      # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
       - name: changeset version and publish, then git push
-        if: steps.status.outputs.changes == 'true'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -60,8 +53,6 @@ jobs:
           git push --follow-tags
 
   build-test-lint:
-    if: needs.changeset-check.outputs.changes == 'true'
-    needs: changeset-check
     runs-on: ubuntu-latest
     strategy:
       matrix:
