@@ -50,6 +50,8 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           pnpx changeset version
+          pnpx install && git commit -am "updating lockfile"
+          git commit -am "$(git log -1 --skip=1 --pretty=%B | xargs && git reset --soft HEAD~2)"
           pnpx changeset publish
           git push
           git push --follow-tags
