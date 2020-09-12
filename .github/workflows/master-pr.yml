@@ -36,9 +36,10 @@ jobs:
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
-
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
       - run: pnpm install --frozen-lockfile
+      # End boilerplate
+
       - run: pnpm prettier
       - run: pnpm build:branch
       - run: pnpm test:branch
@@ -70,9 +71,9 @@ jobs:
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
-
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
-      - run: pnpm install -r
+      - run: pnpm install
+      # End boilerplate
 
       - name: ensure
         run: pnpx changeset status

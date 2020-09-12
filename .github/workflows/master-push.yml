@@ -9,7 +9,41 @@ env:
   PNPM_VERSION: 5.5.12
 
 jobs:
+  changeset-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    outputs:
+      changes: ${{ steps.status.outputs.changes }}
+    steps:
+      # Begin boilerplate
+      - uses: actions/checkout@v2
+      - name: use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: cache pnpm-store
+        id: cache-pnpm
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
+      - run: curl -L https://unpkg.com/@pnpm/self-installer | node
+      - run: pnpm install --frozen-lockfile
+      # End boilerplate
+
+      - id: status
+        run: |
+          if pnpx changeset status 2>&1 | grep -i "no changesets present"; \
+          then echo "::set-output name=changes::false"; \
+          else echo "::set-output name=changes::true"; \
+          fi;
+
   build-test-lint:
+    if: needs.job1.outputs.changes == true
+    needs: changeset-check
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,16 +62,17 @@ jobs:
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
-
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
       - run: pnpm install --frozen-lockfile
+      # End boilerplate
+
       - run: pnpm prettier
       - run: pnpm build
       - run: pnpm test
       - run: pnpm lint
       - run: pnpm depcheck
 
-  changeset:
+  changeset-consume:
     needs: build-test-lint
     runs-on: ubuntu-latest
     strategy:
@@ -61,13 +96,15 @@ jobs:
         with:
           path: ~/.pnpm-store
           key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
-
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
-      - run: pnpm install -r
+      - run: pnpm install
+      # End boilerplate
 
-      # - name: consume
-      #   uses: changesets/action@master
-      #   with:
-      #     publish: pnpx changeset publish && git push --follow-tags
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: consume
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          pnpx changeset version
+          pnpx changeset publish
+          git push
+          git push --follow-tags
