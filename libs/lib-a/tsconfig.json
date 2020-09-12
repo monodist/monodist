@@ -1,0 +1,5 @@
+{
+  "exclude": ["dist", "node_modules"],
+  "extends": "@monodist/tsconfig",
+  "include": ["**/*.ts"]
+}

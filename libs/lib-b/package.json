@@ -1,0 +1,42 @@
+{
+  "name": "@monodist/lib-b",
+  "version": "0.0.0",
+  "description": "A library named lib-b",
+  "keywords": [],
+  "license": "MIT",
+  "author": {
+    "name": "Devin Fee",
+    "email": "devin@devinfee.com"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "compile": "tsc -b tsconfig.build.json",
+    "lint": "eslint --ext .ts,.tsx .",
+    "lint:fix": "eslint --ext .ts,.tsx --fix .",
+    "test": "jest --passWithNoTests",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r ts-node/register node_modules/jest/bin/jest --runInBand",
+    "test:watch": "jest --watch"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:monodist/monodist.git",
+    "directory": "libs/lib-b"
+  },
+  "bugs": {
+    "url": "https://github.com/monodist/monodist/issues"
+  },
+  "devDependencies": {
+    "@monodist/eslint-config": "workspace:*",
+    "@monodist/tsconfig": "workspace:*"
+  }
+}

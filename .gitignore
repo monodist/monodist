@@ -1,0 +1,31 @@
+# OS X temporary files
+.DS_Store
+
+# Logs
+*.log
+
+# Runtime data
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+.pnpm
+.pnpm-store
+node_modules
+
+# Cache directories
+.eslintcache
+.next
+*.tsbuildinfo
+dist
+
+# Archives
+*.tgz
+*.zip
+
+# Environment variable files
+.env
+
+# Works in progress
+**/.dev/*

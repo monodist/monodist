@@ -1,0 +1,8 @@
+# Don't allow people to merge changes to these generated files, because the result may be invalid.
+# You need to run "rush update" again.
+pnpm-lock.yaml               merge=binary
+
+# The rule below prevents pedantic syntax highlighters such as GitHub's from highlighting these comments as errors.
+# Your text editor may also require a special configuration to allow comments in JSON.
+#
+*.json                       linguist-language=JSON-with-Comments

@@ -1,0 +1,38 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "pnpm run -r --if-present build",
+    "build:branch": "pnpm run --filter ...[origin/master] --if-present build",
+    "change": "pnpx changeset",
+    "clean": "pnpm run -r --if-present clean",
+    "depcheck": "pnpm recursive exec -- depcheck",
+    "depcheck:branch": "pnpm recursive exec --filter ...[origin/master] -- depcheck",
+    "lint": "pnpm run -r --if-present lint",
+    "lint:branch": "pnpm run --filter ...[origin/master] --if-present lint",
+    "preinstall": "npx only-allow pnpm",
+    "prettier": "prettier . -l",
+    "prettier:write": "prettier . -l --write",
+    "test": "pnpm run -r --if-present test",
+    "test:branch": "pnpm run --filter ...[origin/master] --if-present test"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.10.2",
+    "@types/eslint": "~7.2.2",
+    "@types/jest": "26.0.13",
+    "@types/node": "^14.6.4",
+    "depcheck": "^1.2.0",
+    "eslint": "^7.8.1",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "jest-standard-reporter": "~1.1.1",
+    "lint-staged": "^10.3.0",
+    "prettier": "^2.1.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "26.3.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  },
+  "engines": {
+    "pnpm": ">=5"
+  }
+}

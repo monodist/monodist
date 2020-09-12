@@ -1,0 +1,16 @@
+---
+ignores:
+  - "@monodist/tsconfig"
+  - "@typescript-eslint/eslint-plugin"
+  - "@typescript-eslint/parser"
+  - eslint-config-prettier
+  - eslint-import-resolver-node
+  - eslint-plugin-eslint-comments
+  - eslint-plugin-import
+  - eslint-plugin-jest
+  - eslint-plugin-json-format
+  - eslint-plugin-jsx-a11y
+  - eslint-plugin-prettier
+  - eslint-plugin-promise
+  - eslint-plugin-react
+  - eslint-plugin-react-hooks

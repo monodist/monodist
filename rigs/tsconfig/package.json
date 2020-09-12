@@ -1,0 +1,20 @@
+{
+  "name": "@monodist/tsconfig",
+  "private": true,
+  "description": "monodist's TypeScript configuration",
+  "version": "0.0.0",
+  "author": {
+    "name": "Devin Fee",
+    "email": "devin@devinfee.com"
+  },
+  "license": "MIT",
+  "main": "tsconfig.json",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:monodist/monodist.git",
+    "directory": "rigs/tsconfig"
+  },
+  "bugs": {
+    "url": "https://github.com/monodist/monodist/issues"
+  }
+}

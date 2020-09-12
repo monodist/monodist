@@ -1,0 +1,58 @@
+{
+  "name": "@monodist/eslint-config",
+  "private": true,
+  "version": "0.0.0",
+  "description": "The common eslint configs",
+  "keywords": [],
+  "license": "MIT",
+  "author": {
+    "name": "Devin Fee",
+    "email": "devin@devinfee.com"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run clean && pnpm run compile",
+    "clean": "rimraf dist *.tsbuildinfo",
+    "compile": "tsc -b tsconfig.build.json",
+    "lint": "eslint --ext .ts,.tsx .",
+    "lint:fix": "eslint --ext .ts,.tsx --fix .",
+    "test": "jest --passWithNoTests",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r ts-node/register node_modules/jest/bin/jest --runInBand",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@rushstack/eslint-patch": "~1.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-node": "~0.3.4",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^24.0.0",
+    "eslint-plugin-json-format": "~2.0.1",
+    "eslint-plugin-jsx-a11y": "~6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "~7.20.6",
+    "eslint-plugin-react-hooks": "~4.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:monodist/monodist.git",
+    "directory": "rigs/eslint-config"
+  },
+  "peerDependencies": {
+    "eslint": "^7.8.1"
+  },
+  "engines": {
+    "node": ">=12.13.0 <13.0.0"
+  },
+  "devDependencies": {
+    "@monodist/tsconfig": "workspace:*"
+  }
+}

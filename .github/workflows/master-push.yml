@@ -1,0 +1,73 @@
+name: Node.js (push to master)
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  PNPM_VERSION: 5.5.12
+
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      # Begin boilerplate
+      - uses: actions/checkout@v2
+      - name: use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: cache pnpm-store
+        id: cache-pnpm
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
+
+      - run: curl -L https://unpkg.com/@pnpm/self-installer | node
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm prettier
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm lint
+      - run: pnpm depcheck
+
+  changeset:
+    needs: build-test-lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      # Begin boilerplate
+      - uses: actions/checkout@v2
+        with:
+          # This makes Actions fetch all Git history so that Changesets can
+          # generate changelogs with the correct commits
+          fetch-depth: 0
+      - name: use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: cache pnpm-store
+        id: cache-pnpm
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
+
+      - run: curl -L https://unpkg.com/@pnpm/self-installer | node
+      - run: pnpm install -r
+
+      # - name: consume
+      #   uses: changesets/action@master
+      #   with:
+      #     publish: pnpx changeset publish && git push --follow-tags
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
