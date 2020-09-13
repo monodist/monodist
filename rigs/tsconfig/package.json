@@ -11,7 +11,7 @@
   "main": "tsconfig.json",
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:monodist/monodist.git",
+    "url": "ssh://git@github.com/monodist/monodist.git",
     "directory": "rigs/tsconfig"
   },
   "bugs": {

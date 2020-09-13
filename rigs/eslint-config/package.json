@@ -42,7 +42,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:monodist/monodist.git",
+    "url": "ssh://git@github.com/monodist/monodist.git",
     "directory": "rigs/eslint-config"
   },
   "peerDependencies": {
