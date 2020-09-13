@@ -21,15 +21,11 @@ jobs:
     steps:
       # Begin setup
       - uses: actions/checkout@v2
-
-      # allows us to reflect build-test-lint only on changed packages
-      - run: git remote set-branches --add origin master
-      - run: git fetch
-
       - uses: actions/setup-node@v1
         with:
+          check-latest: true
           node-version: ${{ env.NODE_VERSION }}
-      - name: cache pnpm-store
+      - name: Cache pnpm-store
         id: cache-pnpm
         uses: actions/cache@v2
         with:
@@ -39,11 +35,21 @@ jobs:
       - run: pnpm install
       # End setup
 
+      # Fetch master for delta checks
+      - name: Fetch master
+        # allows us to reflect build-test-lint only on changed packages
+        run: |
+          git remote set-branches --add origin master
+          git fetch
+
       # Begin: build-test-lint
       - run: pnpm prettier
-      - run: pnpm build:branch
-      - run: pnpm test:branch
-      - run: pnpm lint:branch
-      - run: pnpm depcheck:branch
-      - run: pnpx changeset status
+      - name: Build
+        run: pnpm build:branch
+      - name: Test
+        run: pnpm test:branch
+      - name: Lint
+        run: pnpm lint:branch
+      - name: Check dependencies
+        run: pnpm depcheck:branch
       # End: build-test-lint
