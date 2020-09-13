@@ -63,9 +63,8 @@ jobs:
         run: |
           pnpm install --frozen-lockfile false
           git commit -a --amend --no-edit
-          pnpx prettier -w $(git diff --diff-filter=d --name-only head~1)
+          pnpx prettier -w $(git diff --diff-filter=d --name-only HEAD~1)
           git commit -a --amend --no-edit
-
       # End changeset:version
 
       # Begin standard build-test-lint workflow
