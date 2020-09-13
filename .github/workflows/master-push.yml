@@ -33,21 +33,11 @@ jobs:
       # Run `prettier` before changeset
       - run: pnpm prettier
 
-      # Begin identity
+      # Begin changeset:version
       - name: set git identity
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-      - name: set npm registry authToken
-        run: |
-          cat << EOF > "$HOME/.npmrc"
-          //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
-          EOF
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # End identity
-
-      # Begin changeset:version
       - name: get changeset status
         id: status
         run: |
@@ -81,6 +71,13 @@ jobs:
       # End standard build-test-lint workflow
 
       # Begin changeset:publish
+      - name: set npm registry authToken
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+          //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
+          EOF
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: run changeset publish
         if: steps.status.outputs.changes == 'true'
         run: pnpx changeset publish
