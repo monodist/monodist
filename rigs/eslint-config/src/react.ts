@@ -2,7 +2,6 @@ import { baseConfig } from "./rules/base-config";
 import { commentsConfig } from "./rules/comments-config";
 import { importConfig } from "./rules/import-config";
 import { jestConfig } from "./rules/jest-config";
-import { jsonFormatConfig } from "./rules/json-format";
 import { prettierConfig } from "./rules/prettier-config";
 import { promiseConfig } from "./rules/promise-config";
 import { reactConfig } from "./rules/react-config";
@@ -19,16 +18,11 @@ export = typedLinterConfig({
     ...prettierConfig.extends,
     ...reactConfig.extends,
   ],
-  ignorePatterns: [
-    ...baseConfig.ignorePatterns,
-    ...jestConfig.ignorePatterns,
-    ...jsonFormatConfig.ignorePatterns,
-  ],
+  ignorePatterns: [...baseConfig.ignorePatterns, ...jestConfig.ignorePatterns],
   overrides: [...commentsConfig.overrides, ...jestConfig.overrides],
   parser: typescriptConfig.parser,
   parserOptions: typescriptConfig.parserOptions,
   plugins: [
-    ...jsonFormatConfig.plugins,
     ...prettierConfig.plugins,
     ...promiseConfig.plugins,
     ...reactConfig.plugins,
