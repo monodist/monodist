@@ -55,11 +55,6 @@ jobs:
           then echo "::set-output name=changes::false"; \
           else echo "::set-output name=changes::true"; \
           fi
-      - name: set git identity
-        if: steps.status.outputs.changes == 'true'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
       - name: run changeset version
         if: steps.status.outputs.changes == 'true'
         run: pnpx changeset version
