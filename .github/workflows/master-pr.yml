@@ -1,4 +1,4 @@
-name: Node.js (PR to master)
+name: master (pr)
 
 on:
   pull_request:
@@ -11,38 +11,39 @@ on:
       - synchronize
 
 env:
+  NODE_VERSION: 12
   PNPM_VERSION: 5.5.12
 
 jobs:
   build-test-lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps:
-      # Begin boilerplate
+      # Begin setup
       - uses: actions/checkout@v2
+
+      # allows us to reflect build-test-lint only on changed packages
       - run: git remote set-branches --add origin master
       - run: git fetch
 
-      - name: use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
       - name: cache pnpm-store
         id: cache-pnpm
         uses: actions/cache@v2
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
+          key: ${{ runner.os }}-pnpm-store
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
       - run: pnpm install
-      # End boilerplate
+      # End setup
 
+      # Begin: build-test-lint
       - run: pnpm prettier
       - run: pnpm build:branch
       - run: pnpm test:branch
       - run: pnpm lint:branch
       - run: pnpm depcheck:branch
       - run: pnpx changeset status
+      # End: build-test-lint

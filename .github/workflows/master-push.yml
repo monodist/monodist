@@ -1,4 +1,4 @@
-name: Node.js (push to master)
+name: master (push)
 
 on:
   push:
@@ -6,81 +6,88 @@ on:
       - master
 
 env:
+  NODE_VERSION: 12
   PNPM_VERSION: 5.5.12
 
 jobs:
-  changeset:
+  changeset-build-test-run:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps:
-      # Begin boilerplate
+      # Begin setup
       - uses: actions/checkout@v2
-      - name: use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          check-latest: true
+          node-version: ${{ env.NODE_VERSION }}
       - name: cache pnpm-store
         id: cache-pnpm
         uses: actions/cache@v2
         with:
           path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
+          key: ${{ runner.os }}-pnpm-store
       - run: curl -L https://unpkg.com/@pnpm/self-installer | node
-      - name: enable husky install
-        run: "echo $(cat .huskyrc | jq '. + { skipCI: false }') > .huskyrc"
       - run: pnpm install
-      # End boilerplate
+      # End setup
 
-      - name: write GitHub NPM registry authToken
+      # Run `prettier` before changeset
+      - run: pnpm prettier
+
+      # Begin identity
+      - name: set git identity
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+      - name: set npm registry authToken
         run: |
           cat << EOF > "$HOME/.npmrc"
           //npm.pkg.github.com/:_authToken=$GITHUB_TOKEN
           EOF
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # This will not trigger the `master-push` workflow to re-run as it uses
-      # the GITHUB_TOKEN. To trigger a new workflow, use a personal access
-      # token as described here:
-      # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
-      - name: changeset version and publish, then git push
+      # End identity
+
+      # Begin changeset:version
+      - name: get changeset status
+        id: status
+        run: |
+          if pnpx changeset status 2>&1 | grep -i "no changesets present"; \
+          then echo "::set-output name=changes::false"; \
+          else echo "::set-output name=changes::true"; \
+          fi
+      - name: set git identity
+        if: steps.status.outputs.changes == 'true'
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          pnpx changeset version
-          pnpx install && git commit -am "updating lockfile"
-          git commit -am "$(git log -1 --skip=1 --pretty=%B | xargs && git reset --soft HEAD~2)"
-          pnpx changeset publish
-          git push
-          git push --follow-tags
+      - name: run changeset version
+        if: steps.status.outputs.changes == 'true'
+        run: pnpx changeset version
+      - name: apply changeset
+        if: steps.status.outputs.changes == 'true'
+        run: |
+          pnpm install --frozen-lockfile false
+          git commit -a --amend --no-edit
+          pnpx prettier -w $(git diff --diff-filter=d --name-only head~1)
+          git commit -a --amend --no-edit
 
-  build-test-lint:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
+      # End changeset:version
 
-    steps:
-      # Begin boilerplate
-      - uses: actions/checkout@v2
-      - name: use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: cache pnpm-store
-        id: cache-pnpm
-        uses: actions/cache@v2
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ matrix.node-version }}-pnpm-store
-      - run: curl -L https://unpkg.com/@pnpm/self-installer | node
-      - run: pnpm install
-      # End boilerplate
-
-      - run: pnpm prettier
+      # Begin standard build-test-lint workflow
       - run: pnpm build
       - run: pnpm test
       - run: pnpm lint
       - run: pnpm depcheck
+      # End standard build-test-lint workflow
+
+      # Begin changeset:publish
+      - name: run changeset publish
+        if: steps.status.outputs.changes == 'true'
+        run: pnpx changeset publish
+      - name: git push updates
+        if: steps.status.outputs.changes == 'true'
+        # This WON'T trigger a workflow to run (using GITHUB_TOKEN).
+        # To trigger a workflow, use a personal access token:
+        # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
+        run: git push --follow-tags
+      # End changeset:publish
