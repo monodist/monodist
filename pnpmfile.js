@@ -16,7 +16,6 @@ const peerDependencyMetaOverrides = new Map([
       "eslint-plugin-eslint-comments",
       "eslint-plugin-import",
       "eslint-plugin-jest",
-      "eslint-plugin-json-format",
       "eslint-plugin-jsx-a11y",
       "eslint-plugin-prettier",
       "eslint-plugin-react",
