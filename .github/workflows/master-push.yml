@@ -34,7 +34,7 @@ jobs:
       - name: Check formatting
         run: pnpm prettier
 
-      # Begin changeset:version
+      # Begin version
       - name: Update git config
         run: |
           git config user.name github-actions
@@ -56,7 +56,7 @@ jobs:
           git commit -a --amend --no-edit
           pnpx prettier -w $(git diff --diff-filter=d --name-only HEAD~1)
           git commit -a --amend --no-edit
-      # End changeset:version
+      # End version
 
       # Begin build-test-lint
       - run: pnpm build
@@ -65,7 +65,7 @@ jobs:
       - run: pnpm depcheck
       # End build-test-lint
 
-      # Begin changeset:publish
+      # Begin publish
       - name: Set npm registry authToken
         run: |
           cat << EOF > "$HOME/.npmrc"
@@ -82,6 +82,4 @@ jobs:
         # To trigger a workflow, use a personal access token:
         # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
         run: git push --follow-tags
-        env:
-          NPM_CONFIG_VERBOSE: 1
-      # End changeset:publish
+      # End publish

@@ -25,16 +25,49 @@ There are two workflows:
 
 ### [master-pr.yaml](./..github/workflows/master-pr.yml)
 
-This runs when a PR to `master` is created. It runs a `build-test-lint` which does as the name implies, and also ensures that there are changeset changes (using [@atlassian/changesets](https://github.com/atlassian/changesets))
+This runs when a PR to `master` is created.
+It runs the following steps (grouped here for clarity):
+
+1. Setup
+   1. Checkout the repo
+   1. Setup node
+   1. Cache the pnpm-store
+   1. Downloads the pnpm self-installer
+   1. Installs the workspace dependencies
+1. Fetches the master branch (so pnpm can build-test-lint only the changed packages)
+1. Runs build-test-lint
+   1. Check formatting
+   1. Builds all packages
+   1. Tests all packages
+   1. Lints all packages
+   1. Ensures dependencies are correctly
 
 ### [master-push.yaml](./..github/workflows/master-push.yml)
 
-This runs when a push to `master` happens (e.g. a PR is merged into master). It runs two jobs (in parallel):
+This runs when a push to `master` happens (e.g. a PR is merged into master).
+It runs the following steps (grouped here for clarity):
 
-1. a `changeset` job, which updates the `CHANGELOG.md`s and package versions as appropriate, publishes to the GitHub NPM registry, and pushes the new commits (and tags) to the repository, and
-2. a `build-test-lint` job which does as its name implies.
-
-Read more about why we optimistically run the `changeset` early, below.
+1. Setup
+   1. Checkout the repo
+   1. Setup node
+   1. Cache the pnpm-store
+   1. Downloads the pnpm self-installer
+   1. Installs the workspace dependencies
+1. Check formatting (before any mutations in the repo)
+1. Version
+   1. Updates the git config (adding committer details)
+   1. Get the changeset status (determines if there was a change), and if there are changes:
+      1. Run changeset version (updating changelogs, `package.json`s and auto-committing)
+      1. Reflect changeset version (update the `pnpm-lock.yml`, runs prettier against changes, and ammends the former commit)
+1. Runs build-test-lint
+   1. Builds all packages
+   1. Tests all packages
+   1. Lints all packages
+   1. Ensures dependencies are correctly
+1. Publishes (if a changeset was previously found)
+   1. Sets the `.npmrc` authToken to publish to the GitHub NPM Registry
+   1. Run changeset publish (publishes to the registry, creates git tags)
+   1. Push git changes (the "version" commit from above) and git tags from the previous step
 
 ## Issues / Considerations
 
