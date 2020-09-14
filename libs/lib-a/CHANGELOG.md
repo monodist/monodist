@@ -1,5 +1,11 @@
 # @monodist/lib-a
 
+## 0.1.5
+
+### Patch Changes
+
+- dc40d74: bump to test release workflow
+
 ## 0.1.4
 
 ### Patch Changes
