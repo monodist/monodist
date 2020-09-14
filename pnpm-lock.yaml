@@ -47,7 +47,7 @@ importers:
       "@monodist/tsconfig": "link:../../rigs/tsconfig"
     specifiers:
       "@monodist/eslint-config": "workspace:*"
-      "@monodist/lib-a": "workspace:^0.1.5"
+      "@monodist/lib-a": "workspace:^0.1.6"
       "@monodist/tsconfig": "workspace:*"
   rigs/eslint-config:
     dependencies:

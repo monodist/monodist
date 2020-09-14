@@ -1,5 +1,12 @@
 # @monodist/lib-b
 
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [fa67eb6]
+  - @monodist/lib-a@0.1.6
+
 ## 0.1.7
 
 ### Patch Changes

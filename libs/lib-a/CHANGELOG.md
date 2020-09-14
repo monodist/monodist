@@ -1,5 +1,11 @@
 # @monodist/lib-a
 
+## 0.1.6
+
+### Patch Changes
+
+- fa67eb6: bump2 to test master-push
+
 ## 0.1.5
 
 ### Patch Changes
