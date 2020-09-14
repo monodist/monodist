@@ -1,4 +1,4 @@
-name: release (lib-b)
+name: "Push (tag: @monodist/lib-b)"
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
   PNPM_VERSION: 5.5.12
 
 jobs:
-  changeset-build-test-run:
+  release:
     runs-on: ubuntu-latest
 
     steps:

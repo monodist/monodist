@@ -1,19 +1,20 @@
 {
   "private": true,
   "scripts": {
-    "build": "pnpm run -r --if-present build",
-    "build:branch": "pnpm run --filter ...[origin/master] --if-present build",
+    "build:all": "pnpm -r build",
+    "build:since": "pnpm --filter ...[${SINCE:-$(git merge-base origin/master HEAD)}] build",
     "change": "pnpx changeset",
-    "clean": "pnpm run --parallel -r --if-present clean",
-    "depcheck": "pnpm -r exec --parallel -- depcheck",
-    "depcheck:branch": "pnpm -r exec --parallel --filter ...[origin/master] -- depcheck",
-    "lint": "pnpm run --parallel -r --if-present lint",
-    "lint:branch": "pnpm run --parallel --filter ...[origin/master] --if-present lint",
+    "clean:all": "pnpm -r --parallel clean",
+    "clean:since": "pnpm --filter ...[${SINCE:-$(git merge-base origin/master HEAD)}] --parallel clean",
+    "depcheck:all": "pnpm -r --parallel exec -- depcheck",
+    "depcheck:since": "pnpm --filter ...[${SINCE:-$(git merge-base origin/master HEAD)}] --parallel exec -- depcheck",
+    "lint:all": "pnpm -r --parallel lint",
+    "lint:since": "pnpm --filter ...[${SINCE:-$(git merge-base origin/master HEAD)}] --parallel lint",
     "preinstall": "npx only-allow pnpm",
     "prettier": "prettier . -l",
     "prettier:write": "prettier . -l --write",
-    "test": "pnpm run --parallel -r --if-present test",
-    "test:branch": "pnpm run --parallel --filter ...[origin/master] --if-present test"
+    "test:all": "pnpm -r --parallel test",
+    "test:since": "pnpm --filter ...[${SINCE:-$(git merge-base origin/master HEAD)}] --parallel test"
   },
   "devDependencies": {
     "@changesets/cli": "^2.10.2",

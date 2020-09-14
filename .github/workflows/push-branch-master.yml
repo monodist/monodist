@@ -1,4 +1,4 @@
-name: master (push)
+name: "Push (branch: master)"
 
 on:
   push:
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       - id: check-commit-message
         run: |
-          if git log --format=%B -n 1 HEAD~1 | grep "\[skip ci]" &> /dev/null; \
+          if git log --format=%B -n 1 ${{ github.ref }} | grep "\[skip ci\]" &> /dev/null; \
           then echo "::set-output name=skip-ci::true"; \
           else echo "::set-output name=skip-ci::false"; \
           fi
@@ -77,10 +77,10 @@ jobs:
       # End version
 
       # Begin build-test-lint
-      - run: pnpm build
-      - run: pnpm test
-      - run: pnpm lint
-      - run: pnpm depcheck
+      - run: pnpm build:all
+      - run: pnpm test:all
+      - run: pnpm lint:all
+      - run: pnpm depcheck:all
       # End build-test-lint
 
       # Commit version

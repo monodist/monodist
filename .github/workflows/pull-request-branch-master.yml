@@ -1,4 +1,4 @@
-name: master (pr)
+name: "Pull Request (branch: master)"
 
 on:
   pull_request:
@@ -45,11 +45,11 @@ jobs:
       # Begin: build-test-lint
       - run: pnpm prettier
       - name: Build
-        run: pnpm build:branch
+        run: pnpm build:since
       - name: Test
-        run: pnpm test:branch
+        run: pnpm test:since
       - name: Lint
-        run: pnpm lint:branch
+        run: pnpm lint:since
       - name: Check dependencies
-        run: pnpm depcheck:branch
+        run: pnpm depcheck:since
       # End: build-test-lint

@@ -9,6 +9,16 @@ This is a demonstration repo that proves out:
 
 ## Usage
 
+There are scripts in the root `package.json` as well as the scripts that a package defines in _its_ `package.json`.
+Many of the scripts in the root `package.json` can be applied to only packages which have changed since the most common ancestor with `origin/master` (or a git ref supplied by the user).
+
+For example:
+
+- `pnpm build:since` will build all packages that have changed since the divergence with `origin/master`
+- `SINCE=$(git rev-parse HEAD~2) pnpm build:since` will build all packages that have changed in the last two commits.
+
+## Changes
+
 ### For a new package
 
 Create a new package, and version it to "0.0.0" in its `package.json`, and apply a change (`pnpm change` in the repo root).
