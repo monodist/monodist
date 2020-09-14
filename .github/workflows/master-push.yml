@@ -75,6 +75,7 @@ jobs:
       # Begin publish
       - uses: actions/checkout@v2
         with:
+          clean: false
           token: ${{ secrets.MONODIST_WORKER_GITHUB_ACTIONS_PAT }}
       - name: Set npm registry authToken
         run: |
