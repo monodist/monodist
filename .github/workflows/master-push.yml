@@ -77,6 +77,7 @@ jobs:
         with:
           clean: false
           token: ${{ secrets.MONODIST_WORKER_GITHUB_ACTIONS_PAT }}
+      - run: git pull
       - name: Set npm registry authToken
         run: |
           cat << EOF > "$HOME/.npmrc"

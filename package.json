@@ -4,16 +4,16 @@
     "build": "pnpm run -r --if-present build",
     "build:branch": "pnpm run --filter ...[origin/master] --if-present build",
     "change": "pnpx changeset",
-    "clean": "pnpm run -r --if-present clean",
-    "depcheck": "pnpm recursive exec -- depcheck",
-    "depcheck:branch": "pnpm recursive exec --filter ...[origin/master] -- depcheck",
-    "lint": "pnpm run -r --if-present lint",
-    "lint:branch": "pnpm run --filter ...[origin/master] --if-present lint",
+    "clean": "pnpm run --parallel -r --if-present clean",
+    "depcheck": "pnpm -r exec --parallel -- depcheck",
+    "depcheck:branch": "pnpm -r exec --parallel --filter ...[origin/master] -- depcheck",
+    "lint": "pnpm run --parallel -r --if-present lint",
+    "lint:branch": "pnpm run --parallel --filter ...[origin/master] --if-present lint",
     "preinstall": "npx only-allow pnpm",
     "prettier": "prettier . -l",
     "prettier:write": "prettier . -l --write",
-    "test": "pnpm run -r --if-present test",
-    "test:branch": "pnpm run --filter ...[origin/master] --if-present test"
+    "test": "pnpm run --parallel -r --if-present test",
+    "test:branch": "pnpm run --parallel --filter ...[origin/master] --if-present test"
   },
   "devDependencies": {
     "@changesets/cli": "^2.10.2",
