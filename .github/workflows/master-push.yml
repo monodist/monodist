@@ -10,7 +10,7 @@ env:
   PNPM_VERSION: 5.5.12
 
 jobs:
-  changeset-build-test-run:
+  version-build-test-run:
     runs-on: ubuntu-latest
 
     steps:
@@ -72,12 +72,33 @@ jobs:
         # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
         run: git push
 
-      # Begin publish
+  publish:
+    needs: version-build-test-run
+    runs-on: ubuntu-latest
+
+    steps:
+      # Begin setup
       - uses: actions/checkout@v2
         with:
-          clean: false
           token: ${{ secrets.MONODIST_WORKER_GITHUB_ACTIONS_PAT }}
-      - run: git pull
+      - uses: actions/setup-node@v1
+        with:
+          check-latest: true
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache pnpm-store
+        id: cache-pnpm
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-store
+      - run: curl -L https://unpkg.com/@pnpm/self-installer | node
+      - run: pnpm install
+      # End setup
+
+      # Build
+      - run: pnpm build
+
+      # Begin publish
       - name: Set npm registry authToken
         run: |
           cat << EOF > "$HOME/.npmrc"
@@ -86,12 +107,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run changeset publish
-        if: steps.status.outputs.changes == 'true'
         run: pnpx changeset publish
       - name: Push release git tags
-        if: steps.status.outputs.changes == 'true'
         # This WILL trigger a workflow to run (using GITHUB_TOKEN).
-        # To trigger a workflow, use a personal access token:
         # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
         run: git push --follow-tags
       # End publish
