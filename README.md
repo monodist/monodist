@@ -64,10 +64,12 @@ It runs the following steps (grouped here for clarity):
    1. Tests all packages
    1. Lints all packages
    1. Ensures dependencies are correctly
-1. Publishes (if a changeset was previously found)
+1. Push version commit (if a changeset was found)
+1. Publishes (if a changeset was found)
+   1. Checkout with monodist-worker's personal access token
    1. Sets the `.npmrc` authToken to publish to the GitHub NPM Registry
    1. Run changeset publish (publishes to the registry, creates git tags)
-   1. Push git changes (the "version" commit from above) and git tags from the previous step
+   1. Push release git changes (the "version" commit from above) and git tags from the previous step
 
 ## Issues / Considerations
 

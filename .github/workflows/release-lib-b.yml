@@ -1,0 +1,21 @@
+name: release (lib-b)
+
+on:
+  push:
+    tags:
+      - "@monodist/lib-b@*"
+
+env:
+  NODE_VERSION: 12
+  PNPM_VERSION: 5.5.12
+
+jobs:
+  changeset-build-test-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo sha was ${{ github.sha }} and ref was ${{ github.ref }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - run: echo $(git rev-parse HEAD)

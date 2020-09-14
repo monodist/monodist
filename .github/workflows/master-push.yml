@@ -65,7 +65,17 @@ jobs:
       - run: pnpm depcheck
       # End build-test-lint
 
+      # Commit version
+      - name: Push version commit
+        if: steps.status.outputs.changes == 'true'
+        # This WON'T trigger a workflow to run (using GITHUB_TOKEN).
+        # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
+        run: git push
+
       # Begin publish
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.MONODIST_WORKER_GITHUB_ACTIONS_PAT }}
       - name: Set npm registry authToken
         run: |
           cat << EOF > "$HOME/.npmrc"
@@ -76,15 +86,7 @@ jobs:
       - name: Run changeset publish
         if: steps.status.outputs.changes == 'true'
         run: pnpx changeset publish
-      - name: Push git commit
-        if: steps.status.outputs.changes == 'true'
-        # This WON'T trigger a workflow to run (using GITHUB_TOKEN).
-        # https://docs.github.com/en/actions/reference/events-that-trigger-workflows#triggering-new-workflows-using-a-personal-access-token
-        run: git push
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.MONODIST_WORKER_GITHUB_ACTIONS_PAT }}
-      - name: Push git tags
+      - name: Push release git tags
         if: steps.status.outputs.changes == 'true'
         # This WILL trigger a workflow to run (using GITHUB_TOKEN).
         # To trigger a workflow, use a personal access token:
