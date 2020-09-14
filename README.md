@@ -23,7 +23,7 @@ Then open a PR and merge to `master`.
 
 There are two workflows:
 
-### [master-pr.yaml](./..github/workflows/master-pr.yml)
+### [master-pr.yaml](./.github/workflows/master-pr.yml)
 
 This runs when a PR to `master` is created.
 It runs the following steps (grouped here for clarity):
@@ -42,7 +42,7 @@ It runs the following steps (grouped here for clarity):
    1. Lints all packages
    1. Ensures dependencies are correctly
 
-### [master-push.yaml](./..github/workflows/master-push.yml)
+### [master-push.yaml](./.github/workflows/master-push.yml)
 
 This runs when a push to `master` happens (e.g. a PR is merged into master).
 It runs the following steps (grouped here for clarity):
