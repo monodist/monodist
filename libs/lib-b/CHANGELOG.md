@@ -1,5 +1,11 @@
 # @monodist/lib-b
 
+## 0.1.9
+
+### Patch Changes
+
+- fec8c40: changed the default wrap character
+
 ## 0.1.8
 
 ### Patch Changes
