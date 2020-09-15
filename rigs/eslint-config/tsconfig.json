@@ -1,5 +1,9 @@
 {
-  "exclude": ["dist", "node_modules"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "exclude": ["**/__tests__"],
   "extends": "@monodist/tsconfig",
-  "include": ["**/*.ts"]
+  "include": ["src/**/*.ts"]
 }
