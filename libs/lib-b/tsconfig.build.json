@@ -5,5 +5,9 @@
   },
   "exclude": ["dist", "node_modules", "**/__tests__"],
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "references": [
+    { "path": "../lib-a/tsconfig.build.json" },
+    { "path": "../../rigs/eslint-config/tsconfig.build.json" }
+  ]
 }
