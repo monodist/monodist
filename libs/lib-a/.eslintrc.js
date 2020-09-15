@@ -3,10 +3,13 @@ require("@monodist/eslint-config/dist/patch");
 
 module.exports = {
   extends: [
-    path.join(require.resolve("@monodist/eslint-config"), "..", "react.js"),
+    path.join(require.resolve("@monodist/eslint-config"), "..", "node.js"),
   ],
-  ignorePatterns: [".eslintrc.js", "tailwind.config.js", "postcss.config.js"],
-  parserOptions: { tsconfigRootDir: __dirname },
+  ignorePatterns: [".eslintrc.js"],
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: ["./tsconfig.eslint.json"],
+  },
   rules: {
     "react/prop-types": "off",
   },
