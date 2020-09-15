@@ -21,6 +21,8 @@ jobs:
     steps:
       # Begin setup
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
           check-latest: true
@@ -45,11 +47,11 @@ jobs:
       # Begin: build-test-lint
       - run: pnpm prettier
       - name: Build
-        run: pnpm build:since
+        run: pnpm build:ancestor
       - name: Test
-        run: pnpm test:since
+        run: pnpm test:ancestor
       - name: Lint
-        run: pnpm lint:since
+        run: pnpm lint:ancestor
       - name: Check dependencies
-        run: pnpm depcheck:since
+        run: pnpm depcheck:ancestor
       # End: build-test-lint

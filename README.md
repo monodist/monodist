@@ -12,6 +12,27 @@ This is a demonstration repo that proves out:
 There are scripts in the root `package.json` as well as the scripts that a package defines in _its_ `package.json`.
 Many of the scripts in the root `package.json` can be applied to only packages which have changed since the most common ancestor with `origin/master` (or a git ref supplied by the user).
 
+As a utility, you can retrieve the common ancestor of `HEAD` with `origin/master` by running:
+
+```sh
+pnpm --silent echo:ancestor
+```
+
+Or, to find a common ancestor against any other commit, you can supply a git ref or commit id as the environment variable `ANCESTOR_REF`:
+
+```sh
+ANCESTOR_REF=$(git rev-parse HEAD~20) pnpm echo:ancestor
+```
+
+> hint: use `--silent` to supress additional NPM logging
+
+`ANCESTOR_REF` is also supported by other scripts.
+For example, the following script will test only the packages which have changed since the common ancestor of `HEAD` and twenty commits before `HEAD` (that is, `HEAD~20`).
+
+```sh
+ANCESTOR_REF=$(git rev-parse HEAD~20) pnpm test:ancestor
+```
+
 For example:
 
 - `pnpm build:since` will build all packages that have changed since the divergence with `origin/master`
