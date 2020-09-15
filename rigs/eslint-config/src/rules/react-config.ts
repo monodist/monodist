@@ -1,4 +1,12 @@
-import { typedLinterConfig } from "../utils";
+import { typeScriptReactExtension } from "../constants";
+import { typedLinterConfig, typedLinterConfigRules } from "../utils";
+
+export const typeScriptReactConfigExtensionRules = typedLinterConfigRules({
+  "react/jsx-filename-extension": [
+    "error",
+    { extensions: [typeScriptReactExtension] },
+  ],
+});
 
 export const reactConfig = typedLinterConfig({
   extends: ["plugin:react/recommended", "prettier/react"],
@@ -9,7 +17,6 @@ export const reactConfig = typedLinterConfig({
     "react/button-has-type": "error",
     "react/destructuring-assignment": "error",
     "react/jsx-boolean-value": "error",
-    "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
     "react/jsx-fragments": ["error", "syntax"],
     "react/jsx-handler-names": "error",
     "react/jsx-max-depth": ["error", { max: 7 }],
@@ -32,6 +39,7 @@ export const reactConfig = typedLinterConfig({
     "react/no-unused-state": "error",
     "react/prefer-es6-class": "error",
     "react/prefer-stateless-function": "error",
+    "react/prop-types": "off",
     "react/self-closing-comp": "error",
     "react/void-dom-elements-no-children": "error",
   },

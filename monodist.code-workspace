@@ -1,0 +1,60 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "launch": {
+    "configurations": [
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach Node.js",
+        "port": 9229,
+        "restart": true,
+        "stopOnEntry": false,
+        "protocol": "inspector"
+      }
+    ],
+    "compounds": []
+  },
+  "settings": {
+    "debug.node.autoAttach": "off",
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.minimap.enabled": false,
+    "editor.minimap.maxColumn": 80,
+    "editor.rulers": [80, 100, 120],
+    "editor.wordWrap": "on",
+    "eslint.alwaysShowStatus": true,
+    "eslint.packageManager": "pnpm",
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "json"
+    ],
+    "eslint.workingDirectories": [
+      { "pattern": "./(apis|cli|db|libs|nestjs|services)/*/" }
+    ],
+    "files.associations": { "*.json": "jsonc", "**/chart/**/*.yaml": "helm" },
+    "files.exclude": { "**/.git": true, "**/.DS_Store": true },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "npm.packageManager": "pnpm",
+    "prettier.packageManager": "pnpm",
+    "prettier.requireConfig": true,
+    "prettier.trailingComma": "all",
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/bower_components": true,
+      "**/*.code-search": true,
+      "**/dist": true
+    },
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.updateImportsOnFileMove.enabled": "always"
+  }
+}

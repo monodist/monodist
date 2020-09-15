@@ -1,4 +1,23 @@
-import { typedLinterConfig } from "../utils";
+import { javaScriptExtensions, typeScriptExtensions } from "../constants";
+import { typedLinterConfig, typedLinterConfigSettings } from "../utils";
+
+const [javaScriptImportConfigSettings, baseTypeScriptImportConfigSettings] = [
+  javaScriptExtensions,
+  typeScriptExtensions,
+].map((extensions) => ({
+  "import/resolver": {
+    node: {
+      extensions,
+    },
+  },
+}));
+
+export const typescriptImportConfigSettings = typedLinterConfigSettings({
+  "import/parsers": {
+    "@typescript-eslint/parser": typeScriptExtensions,
+  },
+  ...baseTypeScriptImportConfigSettings,
+});
 
 export const importConfig = typedLinterConfig({
   extends: [
@@ -42,14 +61,5 @@ export const importConfig = typedLinterConfig({
     "import/prefer-default-export": "off",
   },
 
-  settings: {
-    "import/parsers": {
-      "@typescript-eslint/parser": [".ts"],
-    },
-    "import/resolver": {
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-      },
-    },
-  },
+  settings: javaScriptImportConfigSettings,
 });

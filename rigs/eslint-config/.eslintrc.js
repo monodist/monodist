@@ -1,8 +1,7 @@
 module.exports = {
-  extends: ["./dist/index.js"],
-  ignorePatterns: [".eslintrc.js"],
+  extends: ["./dist/node.js"],
   parserOptions: {
-    tsconfigRootDir: __dirname,
     project: ["./tsconfig.eslint.json"],
+    tsconfigRootDir: __dirname,
   },
 };

@@ -1,6 +1,6 @@
 import { typedLinterConfig } from "../utils";
 
-export const baseConfig = typedLinterConfig({
+export const javaScriptConfig = typedLinterConfig({
   extends: ["eslint:recommended"],
   ignorePatterns: ["bin", "dist", "node_modules"],
   rules: {
@@ -15,8 +15,6 @@ export const baseConfig = typedLinterConfig({
     "no-buffer-constructor": "error",
     "no-caller": "error",
     "no-continue": "off",
-    "no-dupe-class-members": "off",
-    "no-empty-function": "off",
     "no-eval": "error",
     "no-extend-native": "error",
     "no-extra-bind": "error",
@@ -57,7 +55,6 @@ export const baseConfig = typedLinterConfig({
     "no-return-await": "error",
     "no-script-url": "error",
     "no-self-compare": "error",
-    "no-shadow": "off",
     "no-shadow-restricted-names": "error",
     "no-template-curly-in-string": "error",
     "no-throw-literal": "error",

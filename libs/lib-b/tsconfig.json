@@ -5,5 +5,6 @@
   },
   "exclude": ["**/__tests__"],
   "extends": "@monodist/tsconfig",
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "references": [{ "path": "../lib-a" }]
 }
