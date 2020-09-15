@@ -1,5 +1,11 @@
 # @monodist/lib-b
 
+## 0.1.10
+
+### Patch Changes
+
+- 73880a4: reverted change of defaut wrapping character
+
 ## 0.1.9
 
 ### Patch Changes
