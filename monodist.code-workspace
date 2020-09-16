@@ -19,7 +19,7 @@
     "compounds": []
   },
   "settings": {
-    "debug.node.autoAttach": "off",
+    "debug.node.autoAttach": "on",
     "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnPaste": true,
