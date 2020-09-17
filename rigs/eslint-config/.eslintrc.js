@@ -2,12 +2,10 @@ module.exports = {
   extends: ["./dist/node.js"],
   overrides: [
     {
-      files: ["*.ts", "*.tsx"],
+      files: ["**/*.ts", "**/*.tsx"],
       parserOptions: {
+        project: "./tsconfig.eslint.json",
         tsconfigRootDir: __dirname,
-      },
-      rules: {
-        "@typescript-eslint/naming-convention": "off",
       },
     },
   ],

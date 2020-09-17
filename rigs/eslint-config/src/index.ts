@@ -1,3 +1,4 @@
-import { base } from "./base";
+import { base2 } from "./base2";
+// import { base } from "./base";
 
-export = base;
+export = base2;

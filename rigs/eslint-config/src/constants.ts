@@ -11,3 +11,10 @@ export const typeScriptExtensions = [
   typeScriptExtension,
   typeScriptReactExtension,
 ];
+
+export const javaScriptOverrideFiles = javaScriptExtensions.map(
+  (ext) => `*${ext}`,
+);
+export const typeScriptOverrideFiles = typeScriptExtensions.map(
+  (ext) => `*${ext}`,
+);

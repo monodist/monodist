@@ -1,9 +1,9 @@
-import { base } from "./base";
+import { base2 } from "./base2";
 
 export = {
-  ...base,
+  ...base2,
   env: {
-    ...base.env,
+    ...base2.env,
     browser: true,
   },
 };

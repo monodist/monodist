@@ -1,10 +1,10 @@
-import { base } from "./base";
+import { base2 } from "./base2";
 import { typedLinterConfig } from "./utils";
 
 export = typedLinterConfig({
-  ...base,
+  ...base2,
   env: {
-    ...base.env,
+    ...base2.env,
     node: true,
   },
 });
