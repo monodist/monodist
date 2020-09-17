@@ -5,8 +5,12 @@ module.exports = {
   extends: [
     path.join(require.resolve("@monodist/eslint-config"), "..", "node.js"),
   ],
-  parserOptions: {
-    project: ["./tsconfig.eslint.json"],
-    tsconfigRootDir: __dirname,
-  },
+  overrides: [
+    {
+      files: ["*.ts", "*.tsx"],
+      parserOptions: {
+        tsconfigRootDir: __dirname,
+      },
+    },
+  ],
 };

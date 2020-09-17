@@ -21,9 +21,8 @@ export const typeScriptConfig = typedLinterConfig({
 
       parserOptions: {
         ecmaVersion: 2019,
-        project: "./tsconfig.json",
+        project: "./tsconfig.eslint.json",
         sourceType: "module",
-        tsconfigRootDir: "./",
       },
 
       plugins: ["@typescript-eslint"],
