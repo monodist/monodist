@@ -1,4 +1,12 @@
-import { base2 } from "./base2";
-// import { base } from "./base";
+import "@rushstack/eslint-patch/lib/modern-module-resolution";
 
-export = base2;
+import browserConfig from "./browser";
+import nodeConfig from "./node";
+import { ConfigMutator } from "./types";
+import { mergeConfig } from "./utils";
+
+export const extendBrowserConfig = (cb: ConfigMutator) =>
+  mergeConfig(browserConfig, cb);
+
+export const extendNodeConfig = (cb: ConfigMutator) =>
+  mergeConfig(nodeConfig, cb);

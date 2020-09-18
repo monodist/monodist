@@ -18,6 +18,12 @@ describe("overrideFilesEqual", () => {
     expect(overrideFilesEqual(left, right)).toBeTruthy();
   });
 
+  it("should be true on same array (different order)", () => {
+    const left = ["*.ts", "*.tsx"];
+    const right = [...left].reverse();
+    expect(overrideFilesEqual(left, right)).toBeTruthy();
+  });
+
   it("should be false on different array", () => {
     const left = ["*.ts", "*.tsx"];
     const right = ["*.js", "*.jsx"];
