@@ -1,10 +1,11 @@
+import { applicator, applyToOverride } from "../applicator";
 import {
   javaScriptExtensions,
   javaScriptOverrideFiles,
   typeScriptExtensions,
   typeScriptOverrideFiles,
 } from "../constants";
-import { applicator, applyToOverride, makeGlobsWithExtension } from "../utils";
+import { makeGlobsWithExtension } from "../utils";
 
 const overrideGlobsWithoutExtension = ["*.generated"];
 const [javaScriptGeneratedFiles, typeScriptGeneratedFiles] = [

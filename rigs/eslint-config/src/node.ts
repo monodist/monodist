@@ -1,3 +1,4 @@
+import { applyAll } from "./applicator";
 import {
   applyBase,
   applyComments,
@@ -7,9 +8,8 @@ import {
   applyPromise,
   applyTypeScript,
 } from "./applicators";
-import { applyAll } from "./utils";
 
-export = applyAll(
+export default applyAll(
   { env: { node: true } },
   applyBase,
   applyTypeScript,

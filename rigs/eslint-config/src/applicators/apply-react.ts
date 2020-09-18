@@ -1,10 +1,10 @@
+import { applicator, applyToOverride } from "../applicator";
 import {
   javaScriptOverrideFiles,
   javaScriptReactExtension,
   typeScriptOverrideFiles,
   typeScriptReactExtension,
 } from "../constants";
-import { applicator, applyToOverride } from "../utils";
 
 export const applyReact = applicator({
   extends: (_extends) => [

@@ -1,20 +1,20 @@
 {
   "private": true,
   "scripts": {
-    "build:all": "pnpm -r build",
+    "build": "pnpm -r build",
     "build:ancestor": "pnpm --filter ...[$(pnpm --silent echo:ancestor)] build",
     "change": "pnpx changeset",
-    "clean:all": "pnpm -r --parallel clean",
+    "clean": "pnpm -r --parallel clean",
     "clean:ancestor": "pnpm --filter ...[$(pnpm --silent echo:ancestor)] --parallel clean",
-    "depcheck:all": "pnpm -r --parallel exec -- depcheck",
+    "depcheck": "pnpm -r --parallel exec -- depcheck",
     "depcheck:ancestor": "pnpm --filter ...[$(pnpm --silent echo:ancestor)] --parallel exec -- depcheck",
     "echo:ancestor": "echo ${ANCESTOR_REF:-$(git merge-base origin/master HEAD)}",
-    "lint:all": "pnpm -r --parallel lint",
+    "lint": "pnpm -r --parallel lint",
     "lint:ancestor": "pnpm --filter ...[$(pnpm --silent echo:ancestor)] --parallel lint",
     "preinstall": "npx only-allow pnpm",
     "prettier": "prettier . -l",
     "prettier:write": "prettier . -l --write",
-    "test:all": "pnpm -r --parallel test",
+    "test": "pnpm -r --parallel test",
     "test:ancestor": "pnpm --filter ...[$(pnpm --silent echo:ancestor)] --parallel test"
   },
   "devDependencies": {

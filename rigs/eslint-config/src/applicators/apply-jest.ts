@@ -1,12 +1,13 @@
 import { Linter } from "eslint";
 
+import { applicator, applyToOverride } from "../applicator";
 import {
   javaScriptExtensions,
   javaScriptOverrideFiles,
   typeScriptExtensions,
   typeScriptOverrideFiles,
 } from "../constants";
-import { applicator, applyToOverride, makeGlobsWithExtension } from "../utils";
+import { makeGlobsWithExtension } from "../utils";
 
 const overrideGlobsWithoutExtension = ["**/__tests__/**/*", "e2e/**/*"];
 const [javaScriptTestFiles, typeScriptTestFiles] = [

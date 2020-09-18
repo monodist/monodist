@@ -1,3 +1,4 @@
+import { applyAll } from "./applicator";
 import {
   applyBase,
   applyComments,
@@ -8,9 +9,8 @@ import {
   applyReact,
   applyTypeScript,
 } from "./applicators";
-import { applyAll } from "./utils";
 
-export = applyAll(
+export default applyAll(
   { env: { browser: true } },
   applyBase,
   applyTypeScript,

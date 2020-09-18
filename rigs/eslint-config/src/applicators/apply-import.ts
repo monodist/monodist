@@ -1,10 +1,10 @@
+import { applicator, applyToOverride } from "../applicator";
 import {
   javaScriptExtensions,
   javaScriptOverrideFiles,
   typeScriptExtensions,
   typeScriptOverrideFiles,
 } from "../constants";
-import { applicator, applyToOverride } from "../utils";
 
 export const applyImport = applicator({
   extends: (_extends) => [

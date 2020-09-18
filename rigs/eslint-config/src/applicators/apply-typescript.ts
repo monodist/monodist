@@ -1,5 +1,5 @@
+import { applicator, applyToOverride } from "../applicator";
 import { typeScriptOverrideFiles } from "../constants";
-import { applicator, applyToOverride } from "../utils";
 
 export const applyTypeScript = applicator({
   overrides: (overrides) => {
@@ -15,9 +15,8 @@ export const applyTypeScript = applicator({
         parserOptions: (parserOptions) => ({
           ...parserOptions,
           ecmaVersion: 2019,
-          // project: "./tsconfig.eslint.json",
+          project: "./tsconfig.eslint.json",
           sourceType: "module",
-          // tsconfigRootDir: "./",
         }),
         plugins: (plugins) => [...plugins, "@typescript-eslint"],
         rules: (rules) => ({

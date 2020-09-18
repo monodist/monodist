@@ -1,5 +1,5 @@
+import { applicator, applyToOverride } from "../applicator";
 import { typeScriptOverrideFiles } from "../constants";
-import { applicator, applyToOverride } from "../utils";
 
 export const applyBase = applicator({
   env: (env) => ({ ...env, es2020: true }),

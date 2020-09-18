@@ -1,16 +1,8 @@
-const path = require("path");
-require("@monodist/eslint-config/dist/patch");
+const {
+  extendNodeConfig,
+  withTypeScriptParserOptions,
+} = require("@monodist/eslint-config");
 
-module.exports = {
-  extends: [
-    path.join(require.resolve("@monodist/eslint-config"), "..", "node.js"),
-  ],
-  overrides: [
-    {
-      files: ["*.ts", "*.tsx"],
-      parserOptions: {
-        tsconfigRootDir: __dirname,
-      },
-    },
-  ],
-};
+module.exports = extendNodeConfig(
+  withTypeScriptParserOptions({ tsconfigRootDir: __dirname }),
+);
