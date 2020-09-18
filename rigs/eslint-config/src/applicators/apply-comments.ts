@@ -14,7 +14,7 @@ const [javaScriptGeneratedFiles, typeScriptGeneratedFiles] = [
   makeGlobsWithExtension(overrideGlobsWithoutExtension, languageExtensions),
 );
 
-export const commentsConfigMutator = applicator({
+export const applyComments = applicator({
   extends: (_extends) => [..._extends, "plugin:eslint-comments/recommended"],
   overrides: (overrides) => {
     applyToOverride(

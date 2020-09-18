@@ -16,7 +16,7 @@ const [javaScriptTestFiles, typeScriptTestFiles] = [
   makeGlobsWithExtension(overrideGlobsWithoutExtension, languageExtensions),
 );
 
-export const jestConfigMutator = applicator({
+export const applyJest = applicator({
   overrides: (overrides) => {
     const commonExtends = ["plugin:jest/recommended", "plugin:jest/style"];
     const commonRules: Partial<Linter.RulesRecord> = {

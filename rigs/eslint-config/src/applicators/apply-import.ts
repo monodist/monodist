@@ -6,7 +6,7 @@ import {
 } from "../constants";
 import { applicator, applyToOverride } from "../utils";
 
-export const importConfigMutator = applicator({
+export const applyImport = applicator({
   extends: (_extends) => [
     ..._extends,
     "plugin:import/errors",

@@ -1,7 +1,7 @@
 import { typeScriptOverrideFiles } from "../constants";
 import { applicator, applyToOverride } from "../utils";
 
-export const typeScriptConfigMutator = applicator({
+export const applyTypeScript = applicator({
   overrides: (overrides) => {
     applyToOverride(
       overrides,

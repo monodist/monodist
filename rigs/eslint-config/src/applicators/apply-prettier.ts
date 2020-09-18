@@ -1,7 +1,7 @@
 import { typeScriptOverrideFiles } from "../constants";
 import { applicator, applyToOverride } from "../utils";
 
-export const prettierConfigMutator = applicator({
+export const applyPrettier = applicator({
   extends: (_extends) => [..._extends, "prettier"],
   overrides: (overrides) => {
     applyToOverride(

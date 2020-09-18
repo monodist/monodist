@@ -6,7 +6,7 @@ import {
 } from "../constants";
 import { applicator, applyToOverride } from "../utils";
 
-export const reactConfigMutator = applicator({
+export const applyReact = applicator({
   extends: (_extends) => [
     ..._extends,
     "plugin:react/recommended",

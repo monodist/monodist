@@ -1,7 +1,7 @@
 import { typeScriptOverrideFiles } from "../constants";
 import { applicator, applyToOverride } from "../utils";
 
-export const baseConfigMutator = applicator({
+export const applyBase = applicator({
   env: (env) => ({ ...env, es2020: true }),
   extends: (_extends) => [..._extends, "eslint:recommended"],
   ignorePatterns: (ignorePatterns) => [
