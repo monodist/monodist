@@ -6,16 +6,18 @@ import {
   applyJest,
   applyPrettier,
   applyPromise,
+  applyReact,
   applyTypeScript,
 } from "./applicators";
 
 export default applyAll(
-  { env: { node: true } },
+  { env: { browser: true } },
   applyBase,
   applyTypeScript,
   applyComments,
   applyImport,
   applyJest,
   applyPromise,
+  applyReact,
   applyPrettier,
 );

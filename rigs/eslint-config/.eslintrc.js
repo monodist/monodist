@@ -1,7 +1,5 @@
-module.exports = {
-  extends: ["./dist/node.js"],
-  parserOptions: {
-    project: ["./tsconfig.eslint.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
+const { extendNodeConfig, withTypeScriptParserOptions } = require("./dist");
+
+module.exports = extendNodeConfig(
+  withTypeScriptParserOptions({ tsconfigRootDir: __dirname }),
+);

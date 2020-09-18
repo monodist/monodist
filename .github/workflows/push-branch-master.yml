@@ -77,10 +77,10 @@ jobs:
       # End version
 
       # Begin build-test-lint
-      - run: pnpm build:all
-      - run: pnpm test:all
-      - run: pnpm lint:all
-      - run: pnpm depcheck:all
+      - run: pnpm build
+      - run: pnpm test
+      - run: pnpm lint
+      - run: pnpm depcheck
       # End build-test-lint
 
       # Commit version

@@ -8,13 +8,36 @@ export const makeGlobsWithExtension = (
     extensions.map((extension) => `${globWithoutExtension}${extension}`),
   );
 
-export const typedLinterConfig = <P extends Linter.Config>(p: P): P => p;
-export const typedLinterConfigOverride = <P extends Linter.ConfigOverride>(
-  p: P,
-): P => p;
-export const typedLinterConfigRules = <P extends Linter.Config["rules"]>(
-  p: P,
-): P => p;
-export const typedLinterConfigSettings = <P extends Linter.Config["settings"]>(
-  p: P,
-): P => p;
+export const overrideFilesEqual = (
+  left: Linter.ConfigOverride["files"],
+  right: Linter.ConfigOverride["files"],
+): boolean => {
+  if (typeof left !== typeof right) {
+    return false;
+  }
+  if (typeof left === "string") {
+    return left === right;
+  }
+  if (left.length !== right.length) {
+    return false;
+  }
+
+  const [sortedLeft, sortedRight] = ([left, right] as string[][]).map((arr) =>
+    arr.sort((a, b) => a.localeCompare(b)),
+  );
+
+  for (let i = 0; i < sortedLeft.length; i += 1) {
+    if (sortedLeft[i] !== sortedRight[i]) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export const toList = <T>(v: undefined | null | T | T[]): T[] =>
+  v === null || v === undefined ? [] : v instanceof Array ? v : [v];
+
+export const isConfig = (
+  v: Linter.Config | Linter.ConfigOverride,
+): v is Linter.Config => (v as Linter.ConfigOverride).files === undefined;

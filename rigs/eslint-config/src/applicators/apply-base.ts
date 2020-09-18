@@ -1,9 +1,32 @@
-import { typedLinterConfig } from "../utils";
+import { applicator, applyToOverride } from "../applicator";
+import { typeScriptOverrideFiles } from "../constants";
 
-export const javaScriptConfig = typedLinterConfig({
-  extends: ["eslint:recommended"],
-  ignorePatterns: ["bin", "dist", "node_modules"],
-  rules: {
+export const applyBase = applicator({
+  env: (env) => ({ ...env, es2020: true }),
+  extends: (_extends) => [..._extends, "eslint:recommended"],
+  ignorePatterns: (ignorePatterns) => [
+    ...ignorePatterns,
+    "bin",
+    "dist",
+    "node_modules",
+  ],
+  overrides: (overrides) => {
+    applyToOverride(
+      overrides,
+      typeScriptOverrideFiles,
+      applicator({
+        rules: (rules) => ({
+          ...rules,
+          "no-dupe-class-members": "off",
+          "no-empty-function": "off",
+          "no-shadow": "off",
+        }),
+      }),
+    );
+    return overrides;
+  },
+  rules: (rules) => ({
+    ...rules,
     "comma-dangle": ["error", "always-multiline"],
     "lines-between-class-members": [
       "error",
@@ -89,5 +112,5 @@ export const javaScriptConfig = typedLinterConfig({
     ],
     "sort-keys": "error",
     yoda: "error",
-  },
+  }),
 });
