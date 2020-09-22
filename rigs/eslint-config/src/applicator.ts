@@ -11,6 +11,10 @@ export type Applicator<T extends Linter.Config | Linter.ConfigOverride> = (
 ) => T;
 
 export type ConfigMutator = {
+  $schema?: (
+    v: Linter.Config["$schema"],
+    config: Linter.Config,
+  ) => Linter.Config["$schema"];
   env?: (
     v: Exclude<Linter.Config["env"], undefined>,
     config: Linter.Config,
@@ -19,10 +23,18 @@ export type ConfigMutator = {
     v: Exclude<Linter.Config["extends"], undefined | string>,
     config: Linter.Config,
   ) => Linter.Config["extends"];
+  globals?: (
+    v: Exclude<Linter.Config["globals"], undefined | string>,
+    config: Linter.Config,
+  ) => Linter.Config["globals"];
   ignorePatterns?: (
     v: Exclude<Linter.Config["ignorePatterns"], undefined | string>,
     config: Linter.Config,
   ) => Linter.Config["ignorePatterns"];
+  noInlineConfig?: (
+    v: Linter.Config["noInlineConfig"],
+    config: Linter.Config,
+  ) => Linter.Config["noInlineConfig"];
   overrides?: (
     v: Exclude<Linter.Config["overrides"], undefined>,
     config: Linter.Config,
@@ -39,6 +51,18 @@ export type ConfigMutator = {
     v: Exclude<Linter.Config["plugins"], undefined>,
     config: Linter.Config,
   ) => Linter.Config["plugins"];
+  processor?: (
+    v: Linter.Config["processor"],
+    config: Linter.Config,
+  ) => Linter.Config["processor"];
+  reportUnusedDisableDirectives?: (
+    v: Linter.Config["reportUnusedDisableDirectives"],
+    config: Linter.Config,
+  ) => Linter.Config["reportUnusedDisableDirectives"];
+  root?: (
+    v: Linter.Config["root"],
+    config: Linter.Config,
+  ) => Linter.Config["root"];
   rules?: (
     v: Exclude<Linter.Config["rules"], undefined>,
     config: Linter.Config,
@@ -50,10 +74,18 @@ export type ConfigMutator = {
 };
 
 export type ConfigOverrideMutator = {
+  $schema?: (
+    v: Linter.ConfigOverride["$schema"],
+    config: Linter.ConfigOverride,
+  ) => Linter.ConfigOverride["$schema"];
   env?: (
     v: Exclude<Linter.ConfigOverride["env"], undefined>,
     config: Linter.ConfigOverride,
   ) => Linter.ConfigOverride["env"];
+  excludedFiles?: (
+    v: Exclude<Linter.ConfigOverride["excludedFiles"], undefined | string>,
+    config: Linter.ConfigOverride,
+  ) => Linter.ConfigOverride["excludedFiles"];
   extends?: (
     v: Exclude<Linter.ConfigOverride["extends"], undefined | string>,
     config: Linter.ConfigOverride,
@@ -62,6 +94,14 @@ export type ConfigOverrideMutator = {
     v: Exclude<Linter.ConfigOverride["files"], undefined | string>,
     config: Linter.ConfigOverride,
   ) => Linter.ConfigOverride["files"];
+  globals?: (
+    v: Exclude<Linter.ConfigOverride["globals"], undefined | string>,
+    config: Linter.ConfigOverride,
+  ) => Linter.ConfigOverride["globals"];
+  noInlineConfig?: (
+    v: Linter.ConfigOverride["noInlineConfig"],
+    config: Linter.ConfigOverride,
+  ) => Linter.ConfigOverride["noInlineConfig"];
   overrides?: (
     v: Exclude<Linter.ConfigOverride["overrides"], undefined>,
     config: Linter.ConfigOverride,
@@ -78,6 +118,14 @@ export type ConfigOverrideMutator = {
     v: Exclude<Linter.ConfigOverride["plugins"], undefined>,
     config: Linter.ConfigOverride,
   ) => Linter.ConfigOverride["plugins"];
+  processor?: (
+    v: Linter.ConfigOverride["processor"],
+    config: Linter.ConfigOverride,
+  ) => Linter.ConfigOverride["processor"];
+  reportUnusedDisableDirectives?: (
+    v: Linter.ConfigOverride["reportUnusedDisableDirectives"],
+    config: Linter.ConfigOverride,
+  ) => Linter.ConfigOverride["reportUnusedDisableDirectives"];
   rules?: (
     v: Exclude<Linter.ConfigOverride["rules"], undefined>,
     config: Linter.ConfigOverride,
@@ -85,7 +133,7 @@ export type ConfigOverrideMutator = {
   settings?: (
     v: Exclude<Linter.ConfigOverride["settings"], undefined>,
     config: Linter.ConfigOverride,
-  ) => Linter.Config["settings"];
+  ) => Linter.ConfigOverride["settings"];
 };
 
 export const applyToOverride = (
@@ -117,17 +165,38 @@ export function apply<T extends Linter.Config | Linter.ConfigOverride>(
   config: T,
   mutator: T extends Linter.Config ? ConfigMutator : ConfigOverrideMutator,
 ): T {
+  const overrideMutator = isConfig(config)
+    ? undefined
+    : (mutator as ConfigOverrideMutator);
+
   return produce(config, (draft) => {
+    if (mutator.$schema) {
+      draft.$schema = mutator.$schema(draft.$schema, draft);
+    }
     if (mutator.env) {
       draft.env = mutator.env(draft.env ?? {}, draft);
+    }
+    if (!isConfig(config) && overrideMutator && overrideMutator.excludedFiles) {
+      (draft as Linter.ConfigOverride).excludedFiles = overrideMutator.excludedFiles(
+        toList((draft as Linter.ConfigOverride).excludedFiles),
+        draft as Linter.ConfigOverride,
+      );
     }
     if (mutator.extends) {
       draft.extends = mutator.extends(toList(draft.extends), draft);
     }
     if (isConfig(draft) && mutator.ignorePatterns) {
-      const cast = draft as Linter.Config;
-      cast.ignorePatterns = mutator.ignorePatterns(
-        toList(cast.ignorePatterns),
+      (draft as Linter.Config).ignorePatterns = mutator.ignorePatterns(
+        toList((draft as Linter.Config).ignorePatterns),
+        draft,
+      );
+    }
+    if (mutator.globals) {
+      draft.globals = mutator.globals(draft.globals ?? {}, draft);
+    }
+    if (mutator.noInlineConfig) {
+      draft.noInlineConfig = mutator.noInlineConfig(
+        draft.noInlineConfig,
         draft,
       );
     }
@@ -145,6 +214,21 @@ export function apply<T extends Linter.Config | Linter.ConfigOverride>(
     }
     if (mutator.plugins) {
       draft.plugins = mutator.plugins(draft.plugins ?? [], draft);
+    }
+    if (mutator.processor) {
+      draft.processor = mutator.processor(draft.processor, draft);
+    }
+    if (mutator.reportUnusedDisableDirectives) {
+      draft.reportUnusedDisableDirectives = mutator.reportUnusedDisableDirectives(
+        draft.reportUnusedDisableDirectives,
+        draft,
+      );
+    }
+    if (isConfig(draft) && mutator.root) {
+      (draft as Linter.Config).root = mutator.root(
+        (draft as Linter.Config).root,
+        draft,
+      );
     }
     if (mutator.rules) {
       draft.rules = mutator.rules(draft.rules ?? {}, draft);
