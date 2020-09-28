@@ -1,8 +1,8 @@
 const {
-  extendNodeConfig,
+  extendNodeJsConfig,
   withTypeScriptParserOptions,
 } = require("@monodist/eslint-config");
 
-module.exports = extendNodeConfig(
+module.exports = extendNodeJsConfig(
   withTypeScriptParserOptions({ tsconfigRootDir: __dirname }),
 );

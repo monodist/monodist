@@ -1,8 +1,8 @@
-export { applyBase } from "./apply-base";
-export { applyComments } from "./apply-comments";
-export { applyImport } from "./apply-import";
-export { applyJest } from "./apply-jest";
-export { applyPrettier } from "./apply-prettier";
-export { applyPromise } from "./apply-promise";
-export { applyReact } from "./apply-react";
-export { applyTypeScript } from "./apply-typescript";
+export { baseApplicator } from "./base.applicator";
+export { commentsApplicator } from "./comments.applicator";
+export { importApplicator } from "./import.applicator";
+export { jestApplicator } from "./jest.applicator";
+export { prettierApplicator } from "./prettier.applicator";
+export { promiseApplicator } from "./promise.applicator";
+export { reactApplicator } from "./react.applicator";
+export { typeScriptApplicator } from "./typescript.applicator";

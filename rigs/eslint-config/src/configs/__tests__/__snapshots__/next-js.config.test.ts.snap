@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`browserConfig should match snapshot 1`] = `
+exports[`nextJsConfig should match snapshot 1`] = `
 "env:
   browser: true
+  node: true
   es2020: true
 extends:
   - eslint:recommended
@@ -18,55 +19,6 @@ ignorePatterns:
   - dist
   - node_modules
 overrides:
-  - files:
-      - \\"*.js\\"
-      - \\"*.jsx\\"
-    overrides:
-      - files:
-          - \\"**/jest*.config.js\\"
-        env:
-          node: true
-      - files:
-          - \\"**/__tests__/**/*.js\\"
-          - \\"**/__tests__/**/*.jsx\\"
-          - e2e/**/*.js
-          - e2e/**/*.jsx
-        env:
-          jest: true
-        extends:
-          - plugin:jest/recommended
-          - plugin:jest/style
-        rules:
-          import/no-extraneous-dependencies:
-            &a1
-            - error
-            - devDependencies: true
-          jest/expect-expect:
-            &a2
-            - error
-            - assertFunctionNames:
-                - expect
-                - request
-          no-process-env: off
-      - files:
-          - \\"*.generated.js\\"
-          - \\"*.generated.jsx\\"
-        rules:
-          eslint-comments/disable-enable-pair: off
-          eslint-comments/no-unlimited-disable: off
-    settings:
-      import/resolver:
-        node:
-          extensions:
-            - .js
-            - .jsx
-      react:
-        version: detect
-    rules:
-      react/jsx-filename-extension:
-        - error
-        - extensions:
-            - .jsx
   - files:
       - \\"*.ts\\"
       - \\"*.tsx\\"
@@ -181,8 +133,16 @@ overrides:
           - plugin:jest/recommended
           - plugin:jest/style
         rules:
-          import/no-extraneous-dependencies: *a1
-          jest/expect-expect: *a2
+          import/no-extraneous-dependencies:
+            &a2
+            - error
+            - devDependencies: true
+          jest/expect-expect:
+            &a3
+            - error
+            - assertFunctionNames:
+                - expect
+                - request
           no-process-env: off
       - files:
           - \\"*.generated.ts\\"
@@ -193,14 +153,59 @@ overrides:
     settings:
       import/parsers:
         \\"@typescript-eslint/parser\\":
-          &a3
+          &a1
           - .ts
           - .tsx
       import/resolver:
         node:
-          extensions: *a3
+          extensions: *a1
       react:
         version: detect
+  - files:
+      - \\"*.js\\"
+      - \\"*.jsx\\"
+    overrides:
+      - files:
+          - \\"**/jest*.config.js\\"
+        env:
+          node: true
+      - files:
+          - \\"**/__tests__/**/*.js\\"
+          - \\"**/__tests__/**/*.jsx\\"
+          - e2e/**/*.js
+          - e2e/**/*.jsx
+        env:
+          jest: true
+        extends:
+          - plugin:jest/recommended
+          - plugin:jest/style
+        rules:
+          import/no-extraneous-dependencies: *a2
+          jest/expect-expect: *a3
+          no-process-env: off
+      - files:
+          - \\"*.generated.js\\"
+          - \\"*.generated.jsx\\"
+        rules:
+          eslint-comments/disable-enable-pair: off
+          eslint-comments/no-unlimited-disable: off
+      - files:
+          - .eslintrc.js
+        env:
+          node: true
+    settings:
+      import/resolver:
+        node:
+          extensions:
+            - .js
+            - .jsx
+      react:
+        version: detect
+    rules:
+      react/jsx-filename-extension:
+        - error
+        - extensions:
+            - .jsx
 rules:
   comma-dangle:
     - error

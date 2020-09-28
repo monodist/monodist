@@ -1,5 +1,5 @@
-const { extendNodeConfig, withTypeScriptParserOptions } = require("./dist");
+const { extendNodeJsConfig, withTypeScriptParserOptions } = require("./dist");
 
-module.exports = extendNodeConfig(
+module.exports = extendNodeJsConfig(
   withTypeScriptParserOptions({ tsconfigRootDir: __dirname }),
 );

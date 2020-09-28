@@ -6,7 +6,7 @@ import {
   typeScriptOverrideFiles,
 } from "../constants";
 
-export const applyImport = applicator({
+export const importApplicator = applicator({
   extends: (_extends) => [
     ..._extends,
     "plugin:import/errors",

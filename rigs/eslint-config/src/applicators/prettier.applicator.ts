@@ -1,7 +1,7 @@
 import { applicator, applyToOverride } from "../applicator";
 import { typeScriptOverrideFiles } from "../constants";
 
-export const applyPrettier = applicator({
+export const prettierApplicator = applicator({
   extends: (_extends) => [..._extends, "prettier"],
   overrides: (overrides) => {
     applyToOverride(

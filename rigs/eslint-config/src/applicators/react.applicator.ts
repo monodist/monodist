@@ -6,7 +6,7 @@ import {
   typeScriptReactExtension,
 } from "../constants";
 
-export const applyReact = applicator({
+export const reactApplicator = applicator({
   extends: (_extends) => [
     ..._extends,
     "plugin:react/recommended",

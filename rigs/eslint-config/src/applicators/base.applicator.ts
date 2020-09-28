@@ -1,7 +1,9 @@
 import { applicator, applyToOverride } from "../applicator";
-import { typeScriptOverrideFiles } from "../constants";
+import { javaScriptOverrideFiles, typeScriptOverrideFiles } from "../constants";
 
-export const applyBase = applicator({
+const eslintFiles = [".eslintrc.js"];
+
+export const baseApplicator = applicator({
   env: (env) => ({ ...env, es2020: true }),
   extends: (_extends) => [..._extends, "eslint:recommended"],
   ignorePatterns: (ignorePatterns) => [
@@ -11,6 +13,22 @@ export const applyBase = applicator({
     "node_modules",
   ],
   overrides: (overrides) => {
+    applyToOverride(
+      overrides,
+      javaScriptOverrideFiles,
+      applicator({
+        overrides: (overrideJsFiles) => {
+          applyToOverride(
+            overrideJsFiles,
+            eslintFiles,
+            applicator({
+              env: (env) => ({ ...env, node: true }),
+            }),
+          );
+          return overrideJsFiles;
+        },
+      }),
+    );
     applyToOverride(
       overrides,
       typeScriptOverrideFiles,

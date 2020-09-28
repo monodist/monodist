@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`nodeConfig should match snapshot 1`] = `
+exports[`nodeJsConfig should match snapshot 1`] = `
 "env:
   node: true
   es2020: true
@@ -16,48 +16,6 @@ ignorePatterns:
   - dist
   - node_modules
 overrides:
-  - files:
-      - \\"*.js\\"
-      - \\"*.jsx\\"
-    overrides:
-      - files:
-          - \\"**/jest*.config.js\\"
-        env:
-          node: true
-      - files:
-          - \\"**/__tests__/**/*.js\\"
-          - \\"**/__tests__/**/*.jsx\\"
-          - e2e/**/*.js
-          - e2e/**/*.jsx
-        env:
-          jest: true
-        extends:
-          - plugin:jest/recommended
-          - plugin:jest/style
-        rules:
-          import/no-extraneous-dependencies:
-            &a1
-            - error
-            - devDependencies: true
-          jest/expect-expect:
-            &a2
-            - error
-            - assertFunctionNames:
-                - expect
-                - request
-          no-process-env: off
-      - files:
-          - \\"*.generated.js\\"
-          - \\"*.generated.jsx\\"
-        rules:
-          eslint-comments/disable-enable-pair: off
-          eslint-comments/no-unlimited-disable: off
-    settings:
-      import/resolver:
-        node:
-          extensions:
-            - .js
-            - .jsx
   - files:
       - \\"*.ts\\"
       - \\"*.tsx\\"
@@ -168,8 +126,16 @@ overrides:
           - plugin:jest/recommended
           - plugin:jest/style
         rules:
-          import/no-extraneous-dependencies: *a1
-          jest/expect-expect: *a2
+          import/no-extraneous-dependencies:
+            &a2
+            - error
+            - devDependencies: true
+          jest/expect-expect:
+            &a3
+            - error
+            - assertFunctionNames:
+                - expect
+                - request
           no-process-env: off
       - files:
           - \\"*.generated.ts\\"
@@ -180,12 +146,50 @@ overrides:
     settings:
       import/parsers:
         \\"@typescript-eslint/parser\\":
-          &a3
+          &a1
           - .ts
           - .tsx
       import/resolver:
         node:
-          extensions: *a3
+          extensions: *a1
+  - files:
+      - \\"*.js\\"
+      - \\"*.jsx\\"
+    overrides:
+      - files:
+          - \\"**/jest*.config.js\\"
+        env:
+          node: true
+      - files:
+          - \\"**/__tests__/**/*.js\\"
+          - \\"**/__tests__/**/*.jsx\\"
+          - e2e/**/*.js
+          - e2e/**/*.jsx
+        env:
+          jest: true
+        extends:
+          - plugin:jest/recommended
+          - plugin:jest/style
+        rules:
+          import/no-extraneous-dependencies: *a2
+          jest/expect-expect: *a3
+          no-process-env: off
+      - files:
+          - \\"*.generated.js\\"
+          - \\"*.generated.jsx\\"
+        rules:
+          eslint-comments/disable-enable-pair: off
+          eslint-comments/no-unlimited-disable: off
+      - files:
+          - .eslintrc.js
+        env:
+          node: true
+    settings:
+      import/resolver:
+        node:
+          extensions:
+            - .js
+            - .jsx
 rules:
   comma-dangle:
     - error
