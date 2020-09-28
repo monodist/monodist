@@ -1,4 +1,4 @@
-name: "Push (tag: @monodist/lib-a)"
+name: "@monodist/lib-a (tag)"
 
 on:
   push:

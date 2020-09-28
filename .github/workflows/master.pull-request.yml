@@ -1,4 +1,4 @@
-name: "Pull Request (branch: master)"
+name: "master (pull-request)"
 
 on:
   pull_request:

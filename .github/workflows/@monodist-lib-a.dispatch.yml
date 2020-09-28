@@ -1,4 +1,4 @@
-name: "Dispatch (tag: @monodist/lib-a)"
+name: "@monodist/lib-a (dispatch)"
 
 on:
   workflow_dispatch:
